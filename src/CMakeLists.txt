@@ -1,0 +1,5 @@
+file(GLOB SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+add_executable(main ${SRC_FILES})
+target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_compile_features(main PRIVATE cxx_std_20)
+target_compile_options(main PRIVATE "/Ox") #"-Ofast" "-march=native")
