@@ -3,7 +3,7 @@
 //
 #include <graph.h>
 #include <serial_bfs.h>
-#include <chrono>
+#include <timer.h>
 #include <iostream>
 
 int main() {
@@ -13,13 +13,21 @@ int main() {
   std::cout << "vertices: " << g.nVertices << ", "
             << "edges: " << g.nEdges << std::endl;
   SerialBfs sbfs(g);
-  sbfs.init();
-  std::cout << "start bfs" << std::endl;
-  auto start = std::chrono::high_resolution_clock::now();
-  sbfs.bfs(g.originToTrans[1]);
-  auto end = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double, std::milli> time = end - start;
+  Timer timer;
+
+  auto testSbfs = [&](int s) {
+    std::cout << "start bfs at " << g.transToOrigin[s] << " --- ";
+    sbfs.init();
+    timer.start();
+    sbfs.bfs(s);
+    timer.end();
+    std::cout << "done" << std::endl;
+  };
+
+  for (int i = 1; i <= 100; ++i) {
+    testSbfs(rand() % g.nVertices);
+  }
   sbfs.write("out.txt");
-  std::cout << time.count() / 1000.0 << "s" << std::endl;
+  std::cout << timer.report(g.nEdges) << "me/s" << std::endl;
   return 0;
 }

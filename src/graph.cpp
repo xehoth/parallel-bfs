@@ -15,6 +15,7 @@ void Graph::load(const std::filesystem::path &path) {
     max = std::max({max, u, v});
     edges.emplace_back(u, v);
   }
+  edges.shrink_to_fit();
   originToTrans.assign(max + 1, -1);
   transToOrigin.clear();
   this->nVertices = 0;

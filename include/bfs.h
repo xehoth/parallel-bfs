@@ -7,7 +7,7 @@
 #include <graph.h>
 
 struct Bfs {
-  explicit Bfs(const Graph &graph) : graph(graph) {}
+  explicit Bfs(const Graph &graph) : graph(graph) { init(); }
 
   virtual void bfs(int s) = 0;
   virtual ~Bfs() = default;
@@ -17,10 +17,12 @@ struct Bfs {
 
   void init() {
     const int n = graph.nVertices;
-    distBuffer = std::move(std::make_unique<int[]>(n));
-    parentBuffer = std::move(std::make_unique<int[]>(n));
-    dist = distBuffer.get();
-    parent = parentBuffer.get();
+    if (!dist) {
+      distBuffer = std::move(std::make_unique<int[]>(n));
+      parentBuffer = std::move(std::make_unique<int[]>(n));
+      dist = distBuffer.get();
+      parent = parentBuffer.get();
+    }
     for (int i = 0; i < n; ++i) parent[i] = -1;
     for (int i = 0; i < n; ++i) dist[i] = -1;
   }
