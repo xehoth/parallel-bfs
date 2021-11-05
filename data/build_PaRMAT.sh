@@ -1,0 +1,1 @@
+cd PaRMAT/Release && make && cp PaRMAT ../../

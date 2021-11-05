@@ -23,6 +23,7 @@ struct Frontier {
     for (std::uint32_t i = 0; i < f.n; ++i) buf[i + 1] = f.d[i] != -1u;
 
     prefixSumOmp(buf, f.n + 1);
+    // prefixSum(buf, f.n + 1);
     this->n = buf[f.n];
 
 #pragma omp parallel for

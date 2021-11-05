@@ -16,7 +16,7 @@ struct TopdownPbfs : public Bfs {
     Bfs::init();
     if (!f) f = std::move(std::make_unique<Frontier>(this->m));
     if (!nf) nf = std::move(std::make_unique<Frontier>(this->m));
-    if (!b) b = std::move(std::make_unique<BitMap32>(this->n));
+    if (!b) b = std::move(std::make_unique<BitMap64>(this->n));
     if (!pi) pi = MemoryManager::get().alloc<std::uint32_t>(this->m + 1);
     if (!cb) cb = MemoryManager::get().alloc<std::uint32_t>(this->m + 1);
     f->clear();
@@ -40,7 +40,9 @@ struct TopdownPbfs : public Bfs {
         const std::uint32_t u = f->d[i], offset = pi[i];
         for (std::uint32_t j = 0; j < this->deg(u); ++j) {
           const std::uint32_t v = this->g[this->o[u] + j];
-          if (!b->testAndSet(v)) {
+          // if (!b->testAndSet(v)) {
+          if (!b->test(v) && dist[v] == -1u) {
+            b->set(v);
             nf->d[offset + j] = v;
             dist[v] = dist[u] + 1;
             parent[v] = u;
@@ -55,7 +57,7 @@ struct TopdownPbfs : public Bfs {
   }
 
   std::unique_ptr<Frontier> f{}, nf{};  // frontier and next frontier
-  std::unique_ptr<BitMap32> b{}, nb{};
+  std::unique_ptr<BitMap64> b{}, nb{};
   std::uint32_t *pi{};  // index: prefix sum (degree)
   std::uint32_t *cb{};  // cull index buffer
 };

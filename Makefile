@@ -1,5 +1,5 @@
 CXX=g++
-FLAGS=-g -std=c++17 -Wall -Wextra -fopenmp -O2
+FLAGS=-g -std=c++17 -Wall -Wextra -fopenmp -O3
 INC_FILES = include/bfs.h include/bitmap.h include/frontier.h include/graph.h include/memory_manager.h include/prefix_sum.h include/reader.h include/serial_bfs.h include/timer.h include/topdown_pbfs.h include/writer.h
 SRC_FILES = src/main.cpp 
 

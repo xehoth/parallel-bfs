@@ -12,17 +12,18 @@
 
 class Reader {
  public:
-  explicit Reader(const std::string &path) {
-    std::ifstream stream(path);
-    std::stringstream content;
-    content << stream.rdbuf();
-    stream.close();
-    this->buffer = content.str();
-    this->it = this->buffer.cbegin();
+  explicit Reader(const std::string &path, size_t bufferSize = 256 << 20)
+      : stream(path), bufferSize(bufferSize), eof() {
+    buffer.resize(bufferSize);
+    it = buffer.cend();
+    updateBuffer();
   }
 
   char get() const { return *it; }
-  void next() { ++it; }
+  void next() {
+    ++it;
+    updateBuffer();
+  }
   void skipLine() {
     while (!isEof() && get() != '\n' && get() != '\r') next();
     while (get() == '\n' || get() == '\r') next();
@@ -46,14 +47,25 @@ class Reader {
     }
     ret = x;
   }
+  void updateBuffer() {
+    if (it == buffer.cend()) {
+      size_t size = stream.rdbuf()->sgetn(buffer.data(), bufferSize);
+      if (size != buffer.size()) buffer.resize(size);
+      it = buffer.cbegin();
+      if (!size) eof = true;
+    }
+  }
   Reader &operator>>(std::uint32_t &x) {
     readInt(x);
     return *this;
   }
-  [[nodiscard]] bool isEof() const { return it == buffer.cend(); }
+  [[nodiscard]] bool isEof() const { return eof; }
 
  private:
+  std::ifstream stream;
+  size_t bufferSize;
   std::string buffer;
   std::string::const_iterator it;
+  bool eof;
 };
 #endif

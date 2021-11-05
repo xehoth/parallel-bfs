@@ -10,7 +10,7 @@ template <typename T>
 class BitMap {
  public:
   BitMap(std::uint32_t n)
-      : n(n), d(MemoryManager::get().alloc<std::uint32_t>(capacity())) {}
+      : n(n), d(MemoryManager::get().alloc<T>(capacity())) {}
 
   inline std::uint32_t capacity() const {
     return this->n / SIZE + (this->n % SIZE != 0);
@@ -24,6 +24,12 @@ class BitMap {
       ret = __atomic_fetch_or(&d[index], T{1} << offset, __ATOMIC_SEQ_CST) >> offset & 1;
     }
     return ret;
+  }
+
+  inline bool test(std::uint32_t i) {
+    const std::uint32_t index = i / SIZE;
+    const std::uint32_t offset = i % SIZE;
+    return d[index] >> offset & 1; 
   }
 
   inline void set(std::uint32_t i) {

@@ -36,7 +36,8 @@ cmake-build-*
 build
 
 data/*
-!data/*.py
+!data/fetch.py
+!data/build_PaRMAT.sh
 .vscode
 
 main

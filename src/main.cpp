@@ -4,11 +4,10 @@
 #include <omp.h>
 
 int main(int argc, const char *argv[]) {
-  // omp_set_num_threads(8);
-  std::string bench = "web-Stanford";
+  std::string bench = "RMAT1";
   std::string path = "data/" + bench + ".txt";
-  // std::unique_ptr<Bfs> g = std::make_unique<SerialBfs>(path);
-  std::unique_ptr<Bfs> g = std::make_unique<TopdownPbfs>(path);
+  // std::unique_ptr<Bfs> g = std::make_unique<SerialBfs>(p./math);
+  std::unique_ptr<Bfs> g = std::make_unique<TopdownPbfs>(path, "RMAT");
   srand(0xC5121);
   Timer timer;
   for (int i = 0; i < 32; ++i) {

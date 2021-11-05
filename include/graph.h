@@ -10,16 +10,46 @@
 #include <vector>
 #include <iostream>
 
+inline int loadEdgesFromSnap(
+    const std::string &path,
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> &edges) {
+  Reader reader(path);
+  std::uint32_t max = 0;
+  for (std::uint32_t u, v; reader >> u >> v, !reader.isEof();) {
+    max = std::max(std::max(max, u), v);
+    edges.emplace_back(u, v);
+  }
+  return max;
+}
+
+inline int loadEdgesFromMatrixMarket(
+    const std::string &path,
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> &edges) {
+  Reader reader(path);
+  std::uint32_t n, m, l;
+  reader >> n >> m >> l;
+  std::uint32_t max = 0;
+  for (std::uint32_t u, v, _; reader >> u >> v >> _, !reader.isEof();) {
+    max = std::max(std::max(max, u), v);
+    edges.emplace_back(u, v);
+  }
+  return max;
+}
+
 struct Graph {
-  Graph(const std::string &path) {
+  Graph(const std::string &path, std::string format = "SNAP") {
     std::clog << "load graph from: " << path << " ... ";
-    Reader reader(path);
     std::vector<std::pair<std::uint32_t, std::uint32_t>> edges;
-    std::uint32_t max = 0;
-    for (std::uint32_t u, v; reader >> u >> v, !reader.isEof();) {
-      max = std::max(std::max(max, u), v);
-      edges.emplace_back(u, v);
+    int max = 0;
+    if (format == "SNAP") {
+      max = loadEdgesFromSnap(path, edges);
+    } else if (format == "MatrixMarket") {
+      max = loadEdgesFromMatrixMarket(path, edges);
+    } else if (format == "RMAT") {
+      edges.reserve(1000000000);
+      max = loadEdgesFromSnap(path, edges);
     }
+
     edges.shrink_to_fit();
 
     constructMapping(edges, max);
@@ -77,8 +107,10 @@ struct Graph {
     }
     for (size_t i = 0; i < output.size(); ++i) {
       if (o2c[i] != -1u) {
-        writer << static_cast<int>(i) << ' ' << output[i].first << ' '
-               /*<< output[i].second*/ << '\n';
+        writer << static_cast<int>(i) << ' ' << output[i].first
+               << ' '
+               /*<< output[i].second*/
+               << '\n';
       }
     }
     std::clog << "done" << std::endl;
