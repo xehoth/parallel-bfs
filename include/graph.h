@@ -78,7 +78,7 @@ struct Graph {
     for (size_t i = 0; i < output.size(); ++i) {
       if (o2c[i] != -1u) {
         writer << static_cast<int>(i) << ' ' << output[i].first << ' '
-               << output[i].second << '\n';
+               /*<< output[i].second*/ << '\n';
       }
     }
     std::clog << "done" << std::endl;
@@ -87,6 +87,8 @@ struct Graph {
   inline std::uint32_t deg(std::uint32_t u) const {
     return this->o[u + 1] - this->o[u];
   }
+
+  virtual ~Graph() = default;
 
   std::uint32_t *g;       // vertices data
   std::uint32_t *o;       // offset index
