@@ -34,3 +34,7 @@
 .idea
 cmake-build-*
 build
+
+data/*
+!data/*.py
+.vscode

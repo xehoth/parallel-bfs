@@ -1,17 +1,20 @@
 //
 // Created by xehoth on 2021/11/4.
 //
-
-#ifndef CS121_LAB_INCLUDE_WRITER_H_
-#define CS121_LAB_INCLUDE_WRITER_H_
+#ifndef WRITER_H_
+#define WRITER_H_
 #include <fstream>
-#include <filesystem>
+#include <string>
 
 class Writer {
  public:
-  explicit Writer(const std::filesystem::path &path,
-                  size_t bufferSize = 1024 * 1024);
-  ~Writer();
+  explicit Writer(const std::string &path, size_t bufferSize = 32 << 20)
+      : stream(path),
+        buffer(std::make_unique<char[]>(bufferSize)),
+        bufferSize(bufferSize),
+        s(buffer.get()) {}
+  ~Writer() { flush(); }
+
   void write(char c) {
     if (s == buffer.get() + bufferSize) {
       flush();
@@ -52,4 +55,4 @@ class Writer {
   size_t bufferSize;
   char *s;
 };
-#endif  // CS121_LAB_INCLUDE_WRITER_H_
+#endif

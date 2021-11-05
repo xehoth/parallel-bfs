@@ -1,17 +1,27 @@
 //
 // Created by xehoth on 2021/11/4.
 //
-
-#ifndef CS121_LAB_INCLUDE_READER_H_
-#define CS121_LAB_INCLUDE_READER_H_
-#include <filesystem>
+#ifndef READER_H_
+#define READER_H_
 #include <string>
 #include <cctype>
+#include <cstdint>
+#include <fstream>
+#include <sstream>
+#include <memory>
 
 class Reader {
  public:
-  explicit Reader(const std::filesystem::path &path);
-  [[nodiscard]] char get() const { return *it; }
+  explicit Reader(const std::string &path) {
+    std::ifstream stream(path);
+    std::stringstream content;
+    content << stream.rdbuf();
+    stream.close();
+    this->buffer = content.str();
+    this->it = this->buffer.cbegin();
+  }
+
+  char get() const { return *it; }
   void next() { ++it; }
   void skipLine() {
     while (!isEof() && get() != '\n' && get() != '\r') next();
@@ -20,8 +30,8 @@ class Reader {
   void skipSpace() {
     while (!isEof() && std::isspace(get())) next();
   }
-  void readInt(int &ret) {
-    int x = 0;
+  void readInt(std::uint32_t &ret) {
+    std::uint32_t x = 0;
     while (!isEof() && !std::isdigit(get())) {
       if (get() == '#') {
         skipLine();
@@ -36,7 +46,7 @@ class Reader {
     }
     ret = x;
   }
-  Reader &operator>>(int &x) {
+  Reader &operator>>(std::uint32_t &x) {
     readInt(x);
     return *this;
   }
@@ -46,4 +56,4 @@ class Reader {
   std::string buffer;
   std::string::const_iterator it;
 };
-#endif  // CS121_LAB_INCLUDE_READER_H_
+#endif

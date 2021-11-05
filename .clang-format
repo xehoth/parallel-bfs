@@ -1,6 +1,6 @@
 BasedOnStyle: Google
-SortIncludes: Never
+SortIncludes: false
 DerivePointerAlignment: false
 PointerAlignment: Right
-UseTab: Never
+UseTab: false
 UseCRLF: false
