@@ -1,1 +1,1 @@
-cd PaRMAT/Release && make && cp PaRMAT ../../
+cd PaRMAT/Release && make && cp PaRMAT ../../gen_rmat

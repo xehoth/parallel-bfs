@@ -29,7 +29,7 @@ def gen_rmat(file, n, m, a, b, c, nt = 16):
     if os.path.exists(file):
         print(f'{file} already generate, skip...')
         return
-    subprocess.run(["PaRMAT", "-nVertices", str(n), "-nEdges", str(m), "-a", str(a), "-b", str(b), "-c", str(c), "-threads", str(nt), "-output", file]).check_returncode()
+    subprocess.run(["gen_rmat", "-nVertices", str(n), "-nEdges", str(m), "-a", str(a), "-b", str(b), "-c", str(c), "-threads", str(nt), "-output", file]).check_returncode()
 
 
 for name, url in zip(names, urls):
