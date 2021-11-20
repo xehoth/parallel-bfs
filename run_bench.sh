@@ -1,0 +1,1 @@
+nohup make bench > bench.log 2>&1 &
