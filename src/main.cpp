@@ -57,7 +57,7 @@ int main(int argc, const char *argv[]) {
     timer.write(g->m, output);
   } else {
     std::clog << "run mode" << std::endl;
-    timer.benchOnce(g.get(), static_cast<std::uint32_t>(source));
+    timer.benchOnce(g.get(), static_cast<std::uint32_t>(g->o2c[source]));
     timer.report(g->m);
     g->write(output);
   }
