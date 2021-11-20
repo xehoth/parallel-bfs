@@ -7,11 +7,11 @@ import shutil
 def bench(name, file, format):
     for i in range(cpu_count()):
         output = "benchmark/" + name + f".{i + 1}.topdown.bench"
-        cmd = ['taskset', '-c', f'0-{i}', './main', file, format, output, '-1', 'topdown']
+        cmd = ['./main', file, format, output, '-1', 'topdown', f'{i + 1}']
         subprocess.run(cmd).check_returncode()
     for i in range(cpu_count()):
         output = "benchmark/" + name + f".{i + 1}.hybrid.bench"
-        cmd = ['taskset', '-c', f'0-{i}', './main', file, format, output, '-1', 'topdown']
+        cmd = ['./main', file, format, output, '-1', 'topdown', f'{i + 1}']
         subprocess.run(cmd).check_returncode()
 
 if __name__ == '__main__':

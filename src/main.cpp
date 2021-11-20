@@ -5,9 +5,9 @@
 #include <omp.h>
 
 void showUsage() {
-  std::cout << "usage (bench): <input> <format> <bench output> -1 <bfs type>"
+  std::cout << "usage (bench): <input> <format> <bench output> -1 <bfs type> <thread num>"
             << std::endl
-            << "usage (run): <input> <format> <output> <source node> <bfs type>"
+            << "usage (run): <input> <format> <output> <source node> <bfs type> <thread num>"
             << std::endl
             << "<format>: choose from SNAP, MatrixMarket, RMAT" << std::endl
             << "<bfs type>: choose from: serial, topdown, hybrid" << std::endl;
@@ -16,12 +16,13 @@ void showUsage() {
 int main(int argc, const char *argv[]) {
   std::string input, output, format, type;
   int source;
-  if (argc == 6) {
+  if (argc == 7) {
     input = argv[1];
     format = argv[2];
     output = argv[3];
     source = std::stoi(argv[4]);
     type = argv[5];
+    omp_set_num_threads(std::stoi(argv[6]));
   } else {
     showUsage();
     return 0;
