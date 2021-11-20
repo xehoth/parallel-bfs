@@ -6,7 +6,7 @@
 int main(int argc, const char *argv[]) {
   std::string bench = "com-orkut.ungraph";
   std::string path = "data/" + bench + ".txt";
-  std::unique_ptr<Bfs> g = std::make_unique<TopdownPbfs>(path, "RMAT");
+  std::unique_ptr<Bfs> g = std::make_unique<TopdownPbfs>(path, "SNAP");
   // std::unique_ptr<Bfs> g = std::make_unique<TopdownPbfs>(path);//, "RMAT");
   srand(0xC5121);
   Timer timer;

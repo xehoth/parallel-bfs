@@ -11,6 +11,7 @@ struct SerialBfs : public Bfs {
 
   void bfs(std::uint32_t s) override {
     std::queue<std::uint32_t> q;
+    parent[s] = s;
     dist[s] = 0;
     q.push(s);
     for (std::uint32_t u; !q.empty();) {

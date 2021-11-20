@@ -99,13 +99,6 @@ struct Graph {
       std::uint32_t max) {
     o2c.resize(max + 1, -1u);
 
-    c2o.resize(max + 1, -1u);
-    for (std::uint32_t i = 0; i < o2c.size(); ++i) {
-      o2c[i] = i;
-      c2o[i] = i;
-    }
-    this->n = max + 1;
-    return;
     this->n = 0;
     for (auto &[u, v] : edges) {
       if (o2c[u] == -1u) {
@@ -130,10 +123,10 @@ struct Graph {
           parent[i] != -1u ? static_cast<int>(c2o[parent[i]]) : -1);
     }
     for (size_t i = 0; i < output.size(); ++i) {
-      if (o2c[i] != -1u) {
+      if (o2c[i] != -1u && output[i].second != -1) {
         writer << static_cast<int>(i) << ' ' << output[i].first
                << ' '
-               /*<< output[i].second*/
+               << output[i].second
                << '\n';
       }
     }
