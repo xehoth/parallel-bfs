@@ -94,8 +94,6 @@ struct Graph {
     std::clog << "done" << std::endl;
     std::clog << "after mapping, vertices: " << n << ", edges: " << m
               << std::endl;
-    
-    std::clog << g[0] << " " << g[1] << " " << g[2] << " " << g[3] << std::endl;
   }
 
   void constructMapping(
@@ -128,10 +126,8 @@ struct Graph {
     }
     for (size_t i = 0; i < output.size(); ++i) {
       if (o2c[i] != -1u && output[i].second != -1) {
-        writer << static_cast<int>(i) << ' ' << output[i].first
-               << ' '
-               << output[i].second
-               << '\n';
+        writer << static_cast<int>(i) << ' ' << output[i].first << ' '
+               << output[i].second << '\n';
       }
     }
     std::clog << "done" << std::endl;
