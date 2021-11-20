@@ -43,7 +43,7 @@ class BitMap {
   }
 
  private:
-  static constexpr std::uint32_t SIZE = sizeof(T);
+  static constexpr std::uint32_t SIZE = sizeof(T) * 8;
   std::uint32_t n;
   T *d;
 };

@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 inline int loadEdgesFromSnap(
     const std::string &path,
@@ -52,6 +53,11 @@ struct Graph {
 
     edges.shrink_to_fit();
 
+    std::clog << "done" << std::endl;
+    std::clog << "vertices: " << max << ", edges: " << edges.size()
+              << std::endl;
+    std::clog << "construct mapping and edges ... ";
+
     constructMapping(edges, max);
 
     std::vector<int> deg(this->n);
@@ -71,17 +77,35 @@ struct Graph {
     for (auto &[u, v] : edges)
       this->g[this->o[o2c[u]] + deg[o2c[u]]++] = o2c[v];
 
+    std::clog << "done" << std::endl;
+
+    std::clog << "sorting adjacent list ... ";
+    for (std::uint32_t i = 0; i < this->n; ++i) {
+      std::sort(this->g + this->o[i], this->g + this->o[i + 1]);
+    }
+
     this->dist = MemoryManager::get().alloc<std::uint32_t>(this->n);
-    this->parent = MemoryManager::get().alloc<std::uint32_t>(this->m);
+    this->parent = MemoryManager::get().alloc<std::uint32_t>(this->n);
 
     std::clog << "done" << std::endl;
-    std::clog << "vertices: " << n << ", edges: " << m << std::endl;
+    std::clog << "after mapping, vertices: " << n << ", edges: " << m
+              << std::endl;
+    
+    std::clog << g[0] << " " << g[1] << " " << g[2] << " " << g[3] << std::endl;
   }
 
   void constructMapping(
       const std::vector<std::pair<std::uint32_t, std::uint32_t>> &edges,
       std::uint32_t max) {
     o2c.resize(max + 1, -1u);
+
+    c2o.resize(max + 1, -1u);
+    for (std::uint32_t i = 0; i < o2c.size(); ++i) {
+      o2c[i] = i;
+      c2o[i] = i;
+    }
+    this->n = max + 1;
+    return;
     this->n = 0;
     for (auto &[u, v] : edges) {
       if (o2c[u] == -1u) {
