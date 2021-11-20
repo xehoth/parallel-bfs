@@ -22,7 +22,6 @@ def download(name, url):
 
 
 def gen_rmat(file, n, m, a, b, c, nt = cpu_count()):
-    print(nt)
     if not os.path.exists("PaRMAT"):
         subprocess.run(["git", "clone", "https://github.com/farkhor/PaRMAT"]).check_returncode()
         subprocess.run(["sh", "build_PaRMAT.sh"])
