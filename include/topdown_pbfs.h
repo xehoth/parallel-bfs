@@ -35,7 +35,6 @@ struct TopdownPbfs : public Bfs {
 #pragma omp parallel for
       for (std::uint32_t i = 0; i < f->n; ++i) pi[i + 1] = this->deg(f->d[i]);
 
-      // prefixSum(pi, f->n + 1);
       prefixSumOmp(pi, f->n + 1);
       nf->n = pi[f->n];
 #pragma omp parallel for schedule(guided)
@@ -43,7 +42,6 @@ struct TopdownPbfs : public Bfs {
         std::uint32_t u = f->d[i], offset = pi[i];
         for (std::uint32_t j = 0; j < this->deg(u); ++j) {
           std::uint32_t v = this->g[this->o[u] + j];
-          // if (!b->testAndSet(v)) {
           if (!b->test(v) && dist[v] == -1u) {
             b->set(v);
             nf->d[offset + j] = v;

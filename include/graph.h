@@ -7,6 +7,7 @@
 #include <writer.h>
 #include <memory_manager.h>
 #include <cstdint>
+#include <cstdlib>
 #include <vector>
 #include <iostream>
 #include <algorithm>
@@ -49,6 +50,9 @@ struct Graph {
     } else if (format == "RMAT") {
       edges.reserve(1000000000);
       max = loadEdgesFromSnap(path, edges);
+    } else {
+      std::cerr << "invalid format type!" << std::endl;
+      std::exit(0);
     }
 
     edges.shrink_to_fit();

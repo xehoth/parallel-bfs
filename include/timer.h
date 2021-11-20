@@ -7,6 +7,7 @@
 #include <chrono>
 #include <numeric>
 #include <cmath>
+#include <fstream>
 #include <bfs.h>
 
 class Timer {
@@ -31,8 +32,10 @@ class Timer {
     return ret;
   }
   void report(std::uint32_t edges) const {
-    std::clog << edges / 1e6 / average() << "MTEPS, stddev: " << stddev()
-              << std::endl;
+    double avg = average();
+    double mteps = edges / 1e6 / avg;
+    std::clog << mteps << "MTEPS, stddev: " << mteps * stddev()
+              << ", time: " << avg << std::endl;
   }
 
   void benchOnce(Bfs *g, std::uint32_t s) {
@@ -40,6 +43,17 @@ class Timer {
     start();
     g->bfs(s);
     end();
+  }
+
+  void write(std::uint32_t edges, const std::string &output) {
+    std::clog << "write benchmark to " << output << " ... ";
+    std::ofstream out(output);
+    double avg = average();
+    double mteps = edges / 1e6 / avg;
+    out << mteps << std::endl
+        << mteps * stddev() << std::endl
+        << avg << std::endl;
+    std::clog << "done" << std::endl;
   }
 
  private:

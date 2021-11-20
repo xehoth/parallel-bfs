@@ -7,5 +7,8 @@ all: ${INC_FILES} ${SRC_FILES}
 	cd data && python3 fetch.py && cd ..
 	${CXX} ${SRC_FILES} -I include/ -o main ${FLAGS}
 
+bench: bench.py
+	make && python3 bench.py
+
 clean:
 	rm -f main out.txt

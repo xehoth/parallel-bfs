@@ -21,7 +21,9 @@ class BitMap {
     const std::uint32_t offset = i % SIZE;
     bool ret = d[index] >> offset & 1;
     if (!ret) {
-      ret = __atomic_fetch_or(&d[index], T{1} << offset, __ATOMIC_SEQ_CST) >> offset & 1;
+      ret = __atomic_fetch_or(&d[index], T{1} << offset, __ATOMIC_SEQ_CST) >>
+                offset &
+            1;
     }
     return ret;
   }
@@ -29,7 +31,7 @@ class BitMap {
   inline bool test(std::uint32_t i) {
     const std::uint32_t index = i / SIZE;
     const std::uint32_t offset = i % SIZE;
-    return d[index] >> offset & 1; 
+    return d[index] >> offset & 1;
   }
 
   inline void set(std::uint32_t i) {
@@ -40,6 +42,11 @@ class BitMap {
 
   void clear() {
     for (std::uint32_t i = 0; i < this->capacity(); ++i) this->d[i] = 0;
+  }
+
+  BitMap &operator|=(const BitMap &rhs) {
+    for (std::uint32_t i = 0; i < this->capacity(); ++i) this->d[i] |= rhs.d[i];
+    return *this;
   }
 
  private:
