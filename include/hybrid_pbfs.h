@@ -81,6 +81,7 @@ struct HybridBfs : public Bfs {
             if (b->test(u)) {
               nb->set(v);
               dist[v] = dist[u] + 1;
+              parent[v] = u;
               m_f += this->deg(v);
               mu -= this->deg(v);
               ++n_f;
