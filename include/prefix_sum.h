@@ -6,7 +6,7 @@
 #include <memory_manager.h>
 #include <omp.h>
 
-static const int MAX_THREADS = 32;
+static const int MAX_THREADS = 64;
 
 template <typename T>
 inline void prefixSum(T *a, std::uint32_t n) {
