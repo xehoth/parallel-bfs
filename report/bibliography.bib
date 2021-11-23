@@ -1,0 +1,34 @@
+@inproceedings{beamer2012direction,
+  title={Direction-optimizing breadth-first search},
+  author={Beamer, Scott and Asanovic, Krste and Patterson, David},
+  booktitle={SC'12: Proceedings of the International Conference on High Performance Computing, Networking, Storage and Analysis},
+  pages={1--10},
+  year={2012},
+  organization={IEEE}
+}
+@inproceedings{wsvr,
+ author = {Khorasani, Farzad and Gupta, Rajiv and Bhuyan, Laxmi N.},
+ title = {Scalable SIMD-Efficient Graph Processing on GPUs},
+ booktitle = {Proceedings of the 24th International Conference on Parallel Architectures and Compilation Techniques},
+ series = {PACT '15},
+ pages = {39--50},
+ year = {2015}
+}
+@INPROCEEDINGS{6113790,  author={Hong, Sungpack and Oguntebi, Tayo and Olukotun, Kunle},  booktitle={2011 International Conference on Parallel Architectures and Compilation Techniques},   title={Efficient Parallel Graph Exploration on Multi-Core CPU and GPU},   year={2011},  volume={},  number={},  pages={78-88},  doi={10.1109/PACT.2011.14}}
+@inproceedings{10.1145/1810479.1810534,
+author = {Leiserson, Charles E. and Schardl, Tao B.},
+title = {A Work-Efficient Parallel Breadth-First Search Algorithm (or How to Cope with the Nondeterminism of Reducers)},
+year = {2010},
+isbn = {9781450300797},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1810479.1810534},
+doi = {10.1145/1810479.1810534},
+abstract = {We have developed a multithreaded implementation of breadth-first search (BFS) of a sparse graph using the Cilk++ extensions to C++. Our PBFS program on a single processor runs as quickly as a standar. C++ breadth-first search implementation. PBFS achieves high work-efficiency by using a novel implementation of a multiset data structure, called a "bag," in place of the FIFO queue usually employed in serial breadth-first search algorithms. For a variety of benchmark input graphs whose diameters are significantly smaller than the number of vertices -- a condition met by many real-world graphs -- PBFS demonstrates good speedup with the number of processing cores.Since PBFS employs a nonconstant-time "reducer" -- "hyperobject" feature of Cilk++ -- the work inherent in a PBFS execution depends nondeterministically on how the underlying work-stealing scheduler load-balances the computation. We provide a general method for analyzing nondeterministic programs that use reducers. PBFS also is nondeterministic in that it contains benign races which affect its performance but not its correctness. Fixing these races with mutual-exclusion locks slows down PBFS empirically, but it makes the algorithm amenable to analysis. In particular, we show that for a graph G=(V,E) with diameter D and bounded out-degree, this data-race-free version of PBFS algorithm runs it time O((V+E)/P + Dlg3(V/D)) on P processors, which means that it attains near-perfect linear speedup if P &lt;&lt; (V+E)/Dlg3(V/D).},
+booktitle = {Proceedings of the Twenty-Second Annual ACM Symposium on Parallelism in Algorithms and Architectures},
+pages = {303–314},
+numpages = {12},
+keywords = {multithreading, nondeterminism, cilk, breadth-first search, hyperobjects, work-stealing, parallel algorithms, reducers, graph algorithms},
+location = {Thira, Santorini, Greece},
+series = {SPAA '10}
+}
