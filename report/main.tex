@@ -288,7 +288,7 @@ web-Stanford     & 227.185 & 675.243, 4  & 648.741, 5  & 2.972 & 0.00342469 & 1.
 roadNet-CA       & 63.536  & 208.959, 4  & 204.252, 4  & 3.289  & 0.0274864 & 0.552123 \\
 com-Orkut        & 373.057 & \textbf{5291.94, 64} & 5280.75, 64 & 14.185 & 0.0225889 & 99.7608 \\
 soc-Livejournal1 & 72.3957 & 1439.49, 63 & 1439.56, 63 & 19.885 & 0.047927 & 15.9759 \\
-RMAT1            & 19.4047 & 559.64, 63  & 549.926, 64 & \textbf{28.857} & 1.78583 & 6.17689  \\
+RMAT1            & 18.965 & 559.64, 63  & 549.926, 64 & \textbf{29.526} & 1.78583 & 6.17689  \\
 RMAT2            & 33.6309 &    906.489, 64         &   912.044, 64          &   27.119 & 1.09644 & 11.5889      \\
 RMAT3            &    138.81     & 2293.06, 62            & 2307.07, 63            &16.620 & 0.43345 & 1000.97         \\ \bottomrule
 \end{tabular}
@@ -300,7 +300,7 @@ In the first two graphs, our peak speedup is around $3$, I think this is because
 In the third graph, com-Orkut, our algorithm reach the peak performance of $5291.94$ MTEPS, which is very efficient. And in the experiment, our performance is always increasing as the number of threads increase.\\
 In the soc-Livejournal1 graph, we also obtain a relatively good speedup.\\
 For the three big random graph, the absolute performance in MTEPS is not that high because of memory access, these graph need too much memory and the cache performance is not that good. However, our algorithm gains a very good speedup in these graphs. The performance almost always increases as the number of threads increase.\\
-And in these graphs, we reach our peak speedup of $28.857$, which is good enough and our algorithm is efficient.
+And in these graphs, we reach our peak speedup of $29.526$, which is good enough and our algorithm is efficient.
 
 \begin{strip}
     \centering
@@ -915,7 +915,7 @@ Threads          & MTEPS  & StdDev     & Time (s)      \\ \midrule
 \begin{tabular}{@{}c|ccc@{}}
 \toprule
 Threads          & MTEPS  & StdDev     & Time (s)      \\ \midrule
-1 & 19.521 & 4.101 & 51.228000 \\
+1 & 18.965 & 4.252 & 52.728000 \\
 2 & 37.882 & 5.904 & 26.397700 \\
 3 & 55.030 & 5.622 & 18.171900 \\
 4 & 73.447 & 7.365 & 13.615300 \\
