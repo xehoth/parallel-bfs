@@ -283,7 +283,7 @@ After running experiments, the benmark result is listed as follows:
 \centering
 \begin{tabular}{@{}c|ccccccc@{}}
 \toprule
-Graph            & Single Thread  & Topdown, threads     & Hybrid, threads      & Speedup & Time (s) & StdDev \\ \midrule
+Graph            & Single Thread  & Topdown, threads     & Hybrid, threads      & \textbf{Speedup} & Time (s) & StdDev \\ \midrule
 web-Stanford     & 227.185 & 675.243, 4  & 648.741, 5  & 2.972 & 0.00342469 & 1.38624    \\
 roadNet-CA       & 63.536  & 208.959, 4  & 204.252, 4  & 3.289  & 0.0274864 & 0.552123 \\
 com-Orkut        & 373.057 & \textbf{5291.94, 64} & 5280.75, 64 & 14.185 & 0.0225889 & 99.7608 \\
@@ -314,6 +314,60 @@ And in these graphs, we reach our peak speedup of $29.526$, which is good enough
 \section{Appendix}
 
 All the experiment data are listed on the next page.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/web-Stanford.png}
+    \caption{web-Stanford Performance}
+    \label{fig:web-Stanford}
+    The graph is too small that we reach peak performance within only $4$ threads with speedup of $2.972$.
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/roadNet-CA.png}
+    \caption{roadNet-CA Performance}
+    \label{fig:roadNet-CA}
+    The graph is too small that we reach peak performance within only $4$ threads with speedup of $3.289$.
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/soc-LiveJournal1.png}
+    \caption{soc-LiveJournal1 Performance}
+    \label{fig:soc-LiveJournal1}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/com-Orkut.png}
+    \caption{com-Orkut Performance}
+    \label{fig:com-Orkut}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/RMAT1.png}
+    \caption{RMAT1 Performance}
+    \label{fig:RMAT1}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/RMAT2.png}
+    \caption{RMAT2 Performance}
+    \label{fig:RMAT2}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/RMAT3.png}
+    \caption{RMAT3 Performance}
+    \label{fig:RMAT3}
+\end{figure}
+
 
 \newpage
 

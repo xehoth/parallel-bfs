@@ -36,7 +36,7 @@ def get_max_performace(l):
 def get_max_speedup(l, base):
     return max(l, key=lambda x: calc_speedup(x, base))
 
-def draw_speedup(data, name, format, show=True):
+def draw_speedup(data, name, format, color, show=True, **args):
     l = data[name]
     a = l[0]
     b = l[1]
@@ -44,9 +44,23 @@ def draw_speedup(data, name, format, show=True):
     x = [i for i in range(1, 64)]
     y = [max(calc_speedup(a[i], base), calc_speedup(b[i], base)) for i in range(len(x))]
     m = max(get_max_speedup(a, base), get_max_speedup(b, base), key=lambda x: calc_speedup(x, base))
-    plt.plot(x, y, format, label=f'{name}')
+    plt.plot(x, y, format, label=f'{name}', color=color, **args)
     if show:
-        plt.text(m.core, calc_speedup(m, base), f'{calc_speedup(m, base):.2f}', ha='center', va='bottom', fontsize=10.5)
+        offset = 1
+        if name == "roadNet-CA":
+            offset = -3
+        plt.text(m.core + offset, calc_speedup(m, base), f'{calc_speedup(m, base):.2f}', ha='center', va='bottom', fontsize=10.5)
+
+def draw_mteps(data, name, format, color, show=True, **argvs):
+    l = data[name]
+    a = l[0]
+    b = l[1]
+    x = [i for i in range(1, 65)]
+    y = [max(u, v, key=lambda x: x.mteps).mteps for u, v in zip(a, b)]
+    m = max([max(u, v, key=lambda x: x.mteps) for u, v in zip(a, b)], key=lambda x: x.mteps)
+    plt.plot(x, y, format, label=f'{name}', color=f'{color}', **argvs)
+    plt.text(m.core, m.mteps, f'{m.mteps:.2f}', ha='center', va='bottom', fontsize=10.5)
+    plt.title(f'{name} performance')
 
 def gen_table(l, name):
     print(r"""\begin{table}[h]
@@ -97,17 +111,28 @@ data = {
 plt.clf()
 plt.plot(list(range(1, 64)), list(range(1, 64)), "r--", label='ideal linear')
 
-draw_speedup(data, "web-Stanford", "k--", False)
-draw_speedup(data, "roadNet-CA", "y-")
-draw_speedup(data, "com-Orkut", "c-")
-draw_speedup(data, "soc-LiveJournal1", "m-")
-draw_speedup(data, "RMAT1", "g-")
-draw_speedup(data, "RMAT2", "b-")
-draw_speedup(data, "RMAT3", "r-")
+draw_speedup(data, "web-Stanford", "-o", "dimgray", False, markersize=3.0)
+draw_speedup(data, "roadNet-CA", "-o", "thistle", markersize=3.0)
+draw_speedup(data, "com-Orkut", "-o" ,"red", markersize=3.0)
+draw_speedup(data, "soc-LiveJournal1", "-o", "green", markersize=3.0)
+draw_speedup(data, "RMAT1", "-o", "blue", markersize=3.0)
+draw_speedup(data, "RMAT2", "-o", "purple", markersize=3.0)
+draw_speedup(data, "RMAT3", "-o", "orange", markersize=3.0)
 
 plt.xlabel("threads")
 plt.ylabel("speedup")
 plt.title(f"speedup graph")
 plt.legend()
-plt.savefig("speedup.png")
+# plt.show()
+
+mteps_draws = ["web-Stanford", "roadNet-CA", "com-Orkut", "soc-LiveJournal1", "RMAT1", "RMAT2", "RMAT3"]
+
+for i in mteps_draws:
+    plt.clf()
+    draw_mteps(data, i, "-o", "skyblue", markersize=4.0)
+    plt.xlabel("threads")
+    plt.ylabel("MTEPS")
+    plt.legend()
+    plt.savefig(f"report/figures/{i}.png")
+
 
