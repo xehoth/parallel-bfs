@@ -1,5 +1,7 @@
 # Parallel Breadth First Search
 
+ShanghaiTech CS121 Parallel Computing Fall 2021 Lab1
+
 ## Build
 
 ``` bash
